@@ -7,6 +7,12 @@
  */
 public class Node {
 	
+	private int key;
+	private int p;
+	private int val;
+	private int maxval;
+	private Endpoint emax;
+	
 	/**
 	 * Returns the parent of this node.
 	 * @return
