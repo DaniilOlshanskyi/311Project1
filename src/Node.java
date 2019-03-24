@@ -7,19 +7,33 @@
  */
 public class Node {
 	
+
 	private int key;
 	private int p;
 	private int val;
 	private int maxval;
 	private Endpoint emax;
 	
+	public Node parent;
+	public Node left;
+	public Node right;
+	public int color;
+	
+	
+	
+	
+	public Node(int key, int p) {
+		this.key = key;
+		this.p = p;
+		this.color = 0;
+	}
+
 	/**
 	 * Returns the parent of this node.
 	 * @return
 	 */
 	public Node getParent() {
-		//TODO: Modify it accordingly.
-		return null;
+		return parent;
 	}
 	
 	/**
@@ -27,8 +41,7 @@ public class Node {
 	 * @return
 	 */
 	public Node getLeft() {
-		//TODO: Modify it accordingly.
-		return null;
+		return left;
 	}
 	
 	/**
@@ -36,8 +49,7 @@ public class Node {
 	 * @return
 	 */
 	public Node getRight() {
-		//TODO: Modify it accordingly.
-		return null;
+		return right;
 	}
 	
 	/**
@@ -45,17 +57,15 @@ public class Node {
 	 * @return
 	 */
 	public int getKey() {
-		//TODO: Modify it accordingly.
-		return 0;
+		return key;
 	}
 	
 	/**
-	 * Returns the value of the functionpbased on this endpoint.
+	 * Returns the value of the function p based on this endpoint.
 	 * @return
 	 */
 	public int getP() {
-		//TODO: Modify it accordingly.
-		return 0;
+		return p;
 	}
 	
 	/**
@@ -63,8 +73,7 @@ public class Node {
 	 * @return
 	 */
 	public int getVal() {
-		//TODO: Modify it accordingly.
-		return 0;
+		return val;
 	}
 	
 	/**
@@ -72,8 +81,7 @@ public class Node {
 	 * @return
 	 */
 	public int getMaxVal() {
-		//TODO: Modify it accordingly.
-		return 0;
+		return maxval;
 	}
 	
 	/**
@@ -92,8 +100,7 @@ public class Node {
 	 * @return
 	 */
 	public Endpoint getEmax() {
-		//TODO: Modify it accordingly.
-		return null;
+		return emax;
 	}
 	
 	/**
@@ -101,8 +108,7 @@ public class Node {
 	 * @return
 	 */
 	public int getColor() {
-		//TODO: Modify it accordingly.
-		return 0;
+		return color;
 	}
 	
 	//Add more functions as  you see fit.
