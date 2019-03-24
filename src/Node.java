@@ -26,6 +26,9 @@ public class Node {
 		this.key = key;
 		this.p = p;
 		this.color = 0;
+		this.parent = null;
+		this.left = null;
+		this.right = null;
 	}
 
 	/**
