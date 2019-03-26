@@ -6,7 +6,7 @@
  * RBTree class, maintains operations on RBTree.
  */
 public class RBTree {
-	
+	//Color: 1 is black, 0 is red
 	private Node nil;
 	private Node root;
 	
@@ -14,7 +14,7 @@ public class RBTree {
 	 * RB Tree constructor. It initializes nil node as well.
 	 */
 	public RBTree() {
-		//TODO: FIGURE OUT IF 0 AS NIL KEY IS OK
+		//TODO: FIGURE OUT IF 0 AS NIL KEY IS OK and 0 AS NIL P OK
 		this.nil = new Node(0,0);
 		nil.color=1;
 		this.root=nil;
@@ -155,6 +155,110 @@ public class RBTree {
 		y.right = z;
 		z.parent = y;	
 	}
+	 
+	private void Transplant(Node u, Node v) {
+		if (u.parent.equals(this.nil)) {
+			this.root = v;
+		} else if (u.equals(u.parent.left)) {
+			u.parent.left = v;
+		} else {
+			u.parent.right = v;
+		}
+		v.parent = u.parent;
+	}
+	 
+	private void Delete(Node z) {
+		Node y = z;
+		Node x;
+		int yOrigColor = y.color;
+		if (z.left.equals(nil)) {
+			 x = z.right;
+			Transplant(z,z.right);
+		} else if (z.right.equals(nil)) {
+			 x = z.left;
+			 Transplant(z,z.left);
+		} else {
+			y = Minimum(z.right);
+			yOrigColor = y.color;
+			x = y.right;
+			if (y.parent.equals(z)) {
+				x.parent = y;
+			} else {
+				Transplant(y,y.right);
+				y.right = z.right;
+				y.right.parent = y;
+			}
+			Transplant(z,y);
+			y.left = z.left;
+			y.left.parent = y;
+			y.color = z.color;
+		}
+		if (yOrigColor==1) {//black
+			DeleteFixup(x);
+		}
+	}
 	
+	private void DeleteFixup(Node x) {
+		while (!x.equals(root) && x.color==1) {
+			if (x.equals(x.parent.left)) {
+				Node w = x.parent.left;
+				if (w.color==0) {
+					w.color = 1;
+					x.parent.color = 0;
+					LeftRotate(x.parent);
+					w = x.parent.right;
+				}
+				if (w.left.color==1 && w.right.color==1) {
+					w.color = 0;
+					x = x.parent;
+				} else {
+					if (w.right.color==1) {
+						w.left.color = 1;
+						w.color = 0;
+						RightRotate(w);
+						w = x.parent.right;
+					}
+					w.color = x.parent.color;
+					x.parent.color = 1;
+					w.right.color = 1;
+					LeftRotate(x.parent);
+					x = root;
+				}
+			} else {
+				Node w = x.parent.right;
+				if (w.color==0) {
+					w.color = 1;
+					x.parent.color = 0;
+					RightRotate(x.parent);
+					w = x.parent.left;
+				}
+				if (w.right.color==1 && w.left.color==1) {
+					w.color = 0;
+					x = x.parent;
+				} else {
+					if (w.left.color==1) {
+						w.right.color = 1;
+						w.color = 0;
+						LeftRotate(w);
+						w = x.parent.left;
+					}
+					w.color = x.parent.color;
+					x.parent.color = 1;
+					w.left.color = 1;
+					RightRotate(x.parent);
+					x = root;
+				}
+				
+			}
+		}
+		x.color = 1;
+	}
+	
+	private Node Minimum(Node x) {
+		while (!x.left.equals(nil)) {
+			x = x.left;
+		}
+		return x;
+	}
 	//Add more functions as  you see fit.
 }

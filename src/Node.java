@@ -17,6 +17,7 @@ public class Node {
 	public Node parent;
 	public Node left;
 	public Node right;
+	//1 is black, 0 is red
 	public int color;
 	
 	
