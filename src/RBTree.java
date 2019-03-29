@@ -15,9 +15,9 @@ public class RBTree {
 	 */
 	public RBTree() {
 		//TODO: FIGURE OUT IF 0 AS NIL KEY IS OK and 0 AS NIL P OK
-		this.nil = new Node(0,0);
+		nil = new Node(0,0);
 		nil.color=1;
-		this.root=nil;
+		root=nil;
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class RBTree {
 	}
 	
 	public void Insert(Node z){
-		//TODO: update p, val, maxval, emax accordingly to project specifications
+		//TODO: update val, maxval, emax accordingly to project specifications
 		Node y = nil;
 		Node x = this.root;
 		while (!x.equals(nil)){
@@ -136,6 +136,8 @@ public class RBTree {
 		}
 		y.left = z;
 		z.parent = y;
+		//recalculate for Z, Z.right, and Z.left
+		RotationCalculation(z);
 	}
 	
 	private void RightRotate(Node z){
@@ -153,7 +155,54 @@ public class RBTree {
 			z.parent.left = y;
 		}
 		y.right = z;
-		z.parent = y;	
+		z.parent = y;
+		//recalculate for Z, Z.right, and Z.left
+		RotationCalculation(z);
+		//recalculate emax
+		
+	}
+	
+	private void RotationCalculation(Node z) {
+		if (z.right != nil) {
+			//do calculation for z.right
+			CalculateValue(z.right);
+			CalculateMaxValue(z.right);
+		} if (z.left != nil) {
+			//do calculation for z.left
+			CalculateValue(z.left);
+			CalculateMaxValue(z.left);
+		}
+		//do calculation for z
+		CalculateValue(z);
+		CalculateMaxValue(z);
+	}
+	
+	/**
+	 * Calculates and returns the value of the node
+	 * @param z
+	 * @return
+	 */
+	private int CalculateValue(Node z) {
+		return z.getP() + z.left.getVal() + z.right.getVal();
+	}
+	
+	/**
+	 * Calculates and returns the max value of the node
+	 * @param z
+	 * @return
+	 */
+	private int CalculateMaxValue(Node z) {
+		int max =  Math.max(z.left.getMaxVal(), Math.max(z.left.getVal() + z.getP(), z.left.getVal() + z.getP() + z.right.getMaxVal()));
+		if (max == z.left.getMaxVal()) {
+			z.setEmax(z.getLeft().getEmax());
+		}
+		else if (max == z.left.getVal() + z.getP()) {
+			z.setEmax(z.getKey());
+		}
+		else if (max == z.left.getVal() + z.getP() + z.right.getMaxVal()) {
+			z.setEmax(z.getRight().getEmax());
+		}
+		return max;
 	}
 	 
 	private void Transplant(Node u, Node v) {
