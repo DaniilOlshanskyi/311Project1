@@ -10,12 +10,13 @@ import java.util.Arrays;
 public class Intervals {
 	//private int ID = 0; If deletion is done, this could be used to keep track of edpoints
 	//                    for the same interval.
+	private RBTree rbTree;
 	
 	/**
 	 * Constructor with no parameters.
 	 */
-	public Intervals() {
-		//TODO: Complete it as needed
+	public Intervals(RBTree rbtree) {
+		this.rbTree = rbtree;
 	}
 	
 	/**
@@ -33,6 +34,11 @@ public class Intervals {
 	 */
 	void intervalInsert(int a, int b) {
 		//TODO: Complete it as needed
+		Node begin = new Node(a, 1);
+		Node end = new Node(b, -1);
+		
+		rbTree.Insert(begin);
+		rbTree.Insert(end);
 	}
 	
 	/**
@@ -66,8 +72,7 @@ public class Intervals {
 	 * @return
 	 */
 	RBTree getRBTree() {
-		//TODO: Modify it accordingly.
-		return null;
+		return rbTree;
 	}
 	
 	
@@ -81,7 +86,7 @@ public class Intervals {
 	 */
 	public static void main(String [] args) {
 		int points[][] = {{0, 4}, {1, 6}, {3, 9}, {7, 11}};
-		Intervals intv = new Intervals();
+		Intervals intv = new Intervals(new RBTree());
 		
 		for(int i=0; i<points.length; i++) {
 			//System.out.println("Inserting: "+ Arrays.toString(points[i]));
