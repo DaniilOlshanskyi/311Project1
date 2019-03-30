@@ -33,7 +33,7 @@ public class Intervals {
 	 * @param b
 	 */
 	void intervalInsert(int a, int b) {
-		//TODO: Complete it as needed
+		//TODO make this use endpoints
 		Node begin = new Node(a, 1);
 		Node end = new Node(b, -1);
 		
@@ -64,7 +64,7 @@ public class Intervals {
 	 */
 	int findPOM() {
 		//TODO: Modify it accordingly.
-		return 0;
+		return rbTree.getRoot().getEmax();
 	}
 	
 	/**

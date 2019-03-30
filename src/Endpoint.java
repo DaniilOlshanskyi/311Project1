@@ -6,7 +6,10 @@
  * Endpoint class for Node.
  */
 public class Endpoint {
-	
+	public Node n;
+	public Endpoint(Node n) {
+		this.n = n;
+	}
 	/**
 	 * returns the endpoint value.  For example if the
 	 * End point object represents the left end point of the 
@@ -15,6 +18,6 @@ public class Endpoint {
 	 */
 	public int getValue() {
 		//TODO: Modify it accordingly.
-		return 1;
+		return n.getKey();
 	}
 }
