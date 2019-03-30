@@ -311,7 +311,7 @@ public class RBTree {
 		return x;
 	}
 	private void Climb(Node z) {
-		while (z != nil) {
+		while (!z.equals(nil)) {
 			CalculateMaxValue(z);
 			CalculateValue(z);
 			z = z.parent;
