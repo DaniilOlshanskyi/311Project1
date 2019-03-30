@@ -79,6 +79,7 @@ public class RBTree {
 		z.right=nil;
 		z.color=0;
 		InsertFixup(z);
+		Climb(z);
 	}
 	
 	private void InsertFixup(Node z){
@@ -308,6 +309,13 @@ public class RBTree {
 			x = x.left;
 		}
 		return x;
+	}
+	private void Climb(Node z) {
+		while (z != nil) {
+			CalculateMaxValue(z);
+			CalculateValue(z);
+			z = z.parent;
+		}
 	}
 	//Add more functions as  you see fit.
 }
