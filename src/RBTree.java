@@ -124,11 +124,11 @@ public class RBTree {
 	private void LeftRotate(Node z){
 		Node y = z.right;
 		z.right = y.left;
-		if (y.left!=null){
+		if (!y.left.equals(nil)){
 			y.left.parent = z;
 		}
 		y.parent = z.parent;
-		if (z.parent==null){
+		if (z.parent.equals(nil)){
 			root = y;
 		} else if (z.equals(z.parent.left)){
 			z.parent.left = y;
@@ -144,11 +144,11 @@ public class RBTree {
 	private void RightRotate(Node z){
 		Node y = z.left;
 		z.left = y.right;
-		if (y.right!=null){
+		if (!y.right.equals(nil)){
 			y.right.parent = z;
 		}
 		y.parent = z.parent;
-		if (z.parent==null){
+		if (z.parent.equals(nil)){
 			root = y;
 		} else if (z.equals(z.parent.right)){
 			z.parent.right = y;
