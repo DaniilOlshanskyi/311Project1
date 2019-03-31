@@ -6,9 +6,9 @@
  * Endpoint class for Node.
  */
 public class Endpoint {
-	public Node n;
-	public Endpoint(Node n) {
-		this.n = n;
+	private int value;
+	public Endpoint(int value) {
+		this.value = value;
 	}
 	/**
 	 * returns the endpoint value.  For example if the
@@ -18,6 +18,6 @@ public class Endpoint {
 	 */
 	public int getValue() {
 		//TODO: Modify it accordingly.
-		return n.getKey();
+		return value;
 	}
 }

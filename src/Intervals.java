@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -8,16 +9,15 @@ import java.util.Arrays;
  * A wrapper class for RBTree
  */
 public class Intervals {
-	//private int ID = 0; If deletion is done, this could be used to keep track of edpoints
-	//                    for the same interval.
-	private RBTree rbTree;
+	private int ID = 1; //If deletion is done, this could be used to keep track of edpoints
+	                    //for the same interval.
+	private RBTree rbTree = new RBTree();
+	private ArrayList<Interval> inters = new ArrayList<Interval>();
 	
 	/**
 	 * Constructor with no parameters.
 	 */
-	public Intervals(RBTree rbtree) {
-		this.rbTree = rbtree;
-	}
+	public Intervals() {}
 	
 	/**
 	 * 
@@ -39,6 +39,8 @@ public class Intervals {
 		
 		rbTree.Insert(begin);
 		rbTree.Insert(end);
+		inters.add(new Interval(ID, new Endpoint(a), new Endpoint(b)));
+		ID++;
 	}
 	
 	/**
@@ -86,12 +88,22 @@ public class Intervals {
 	 */
 	public static void main(String [] args) {
 		int points[][] = {{0, 4}, {1, 6}, {3, 9}, {7, 11}};
-		Intervals intv = new Intervals(new RBTree());
+		Intervals intv = new Intervals();
 		
 		for(int i=0; i<points.length; i++) {
 			//System.out.println("Inserting: "+ Arrays.toString(points[i]));
 			intv.intervalInsert(points[i][0], points[i][1]);
 		}
 		System.out.println("POM is: "+ intv.findPOM()); //Should return 3.
+	}
+	
+	class Interval{
+		public int id;
+		public Endpoint left, right;
+		public Interval(int id, Endpoint left, Endpoint right) {
+			this.id = id;
+			this.left = left;
+			this.right = right;
+		}
 	}
 }
