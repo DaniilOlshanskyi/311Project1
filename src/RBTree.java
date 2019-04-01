@@ -19,6 +19,7 @@ public class RBTree {
 		//TODO: FIGURE OUT IF 0 AS NIL KEY IS OK and 0 AS NIL P OK
 		nil = new Node(0,0);
 		nil.color=1;
+		nil.height=-1;
 		root=nil;
 	}
 	
@@ -82,6 +83,7 @@ public class RBTree {
 		z.color=0;
 		InsertFixup(z);
 		Climb(z);
+		ClimbHeight(z);
 	}
 	
 	private void InsertFixup(Node z){
@@ -124,6 +126,7 @@ public class RBTree {
 	}
 	
 	private void LeftRotate(Node z){
+		z.height--;
 		Node y = z.right;
 		z.right = y.left;
 		if (!y.left.equals(nil)){
@@ -144,6 +147,7 @@ public class RBTree {
 	}
 	
 	private void RightRotate(Node z){
+		z.height--;
 		Node y = z.left;
 		z.left = y.right;
 		if (!y.right.equals(nil)){
@@ -319,17 +323,18 @@ public class RBTree {
 		}
 	}
 	
-	private void climbHeight(Node z){
-		if (!z.equals(root)){
-			while (!z.equals(root)){
-				if (!z.left.equals(nil)){
-					z.height=z.left.height+1;
-				}
-				if (!z.right.equals(nil)){
-					z.height=z.right.height+1;
-				}
+	private void ClimbHeight(Node z){
+			while (!z.equals(nil)){
+				z.height=Math.max(z.left.height, z.right.height)+1;
+				z=z.parent;
+//				if (!z.left.equals(nil)){
+//					z.height=z.left.height+1;
+//				}
+//				if (!z.right.equals(nil)){
+//					z.height=z.right.height+1;
+//				}
 			}
-		}
+
 	}
 	//Add more functions as  you see fit.
 }
