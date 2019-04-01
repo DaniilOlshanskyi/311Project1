@@ -1,7 +1,8 @@
 /**
  * Team members:
- * @author John Doe
- * @author Jane Doe
+ * @author Max Medberry
+ * @author Kenneth Lange
+ * @author Daniil Olshanskyi
  * 
  * Endpoint class for Node.
  */
