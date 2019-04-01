@@ -247,6 +247,7 @@ public class RBTree {
 		if (yOrigColor==1) {//black
 			DeleteFixup(x);
 		}
+		Climb(x);
 	}
 	
 	private void DeleteFixup(Node x) {
