@@ -9,6 +9,7 @@ public class RBTree {
 	//Color: 1 is black, 0 is red
 	private Node nil;
 	private Node root;
+	private int size;
 	
 	/**
 	 * RB Tree constructor. It initializes nil node as well.
@@ -42,7 +43,7 @@ public class RBTree {
 	 */
 	public int getSize() {
 		//TODO: Modify it accordingly.
-		return 0;
+		return size;
 	}
 	
 	
