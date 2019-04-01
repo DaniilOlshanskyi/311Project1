@@ -203,7 +203,7 @@ public class RBTree {
 		else if (max == z.left.getVal() + z.getP() + z.right.getMaxVal()) {
 			z.setEmax(z.getRight().getEmax());
 		}
-		z.emax = max;
+		z.maxval = max;
 	}
 	 
 	private void Transplant(Node u, Node v) {

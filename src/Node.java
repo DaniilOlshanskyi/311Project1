@@ -12,7 +12,7 @@ public class Node {
 	private int key;
 	private int p;
 	public int val;
-	private int maxval;
+	public int maxval;
 	public int emax;
 	
 	public Node parent;
