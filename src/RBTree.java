@@ -183,18 +183,16 @@ public class RBTree {
 	/**
 	 * Calculates and returns the value of the node
 	 * @param z
-	 * @return
 	 */
-	private int CalculateValue(Node z) {
-		return z.getP() + z.left.getVal() + z.right.getVal();
+	private void CalculateValue(Node z) {
+		z.val =  z.getP() + z.left.getVal() + z.right.getVal();
 	}
 	
 	/**
 	 * Calculates and returns the max value of the node
 	 * @param z
-	 * @return
 	 */
-	private int CalculateMaxValue(Node z) {
+	private void CalculateMaxValue(Node z) {
 		int max =  Math.max(z.left.getMaxVal(), Math.max(z.left.getVal() + z.getP(), z.left.getVal() + z.getP() + z.right.getMaxVal()));
 		if (max == z.left.getMaxVal()) {
 			z.setEmax(z.getLeft().getEmax());
@@ -205,7 +203,7 @@ public class RBTree {
 		else if (max == z.left.getVal() + z.getP() + z.right.getMaxVal()) {
 			z.setEmax(z.getRight().getEmax());
 		}
-		return max;
+		z.emax = max;
 	}
 	 
 	private void Transplant(Node u, Node v) {

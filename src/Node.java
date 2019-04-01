@@ -11,9 +11,9 @@ public class Node {
 
 	private int key;
 	private int p;
-	private int val;
+	public int val;
 	private int maxval;
-	private int emax;
+	public int emax;
 	
 	public Node parent;
 	public Node left;
