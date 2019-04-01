@@ -320,5 +320,18 @@ public class RBTree {
 			z = z.parent;
 		}
 	}
+	
+	private void climbHeight(Node z){
+		if (!z.equals(root)){
+			while (!z.equals(root)){
+				if (!z.left.equals(nil)){
+					z.height=z.left.height+1;
+				}
+				if (!z.right.equals(nil)){
+					z.height=z.right.height+1;
+				}
+			}
+		}
+	}
 	//Add more functions as  you see fit.
 }

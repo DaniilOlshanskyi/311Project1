@@ -20,6 +20,7 @@ public class Node {
 	public Node right;
 	//1 is black, 0 is red
 	public int color;
+	public int height;
 	
 	
 	
@@ -31,6 +32,7 @@ public class Node {
 		this.parent = null;
 		this.left = null;
 		this.right = null;
+		this.height=0;
 	}
 
 	/**
@@ -120,5 +122,8 @@ public class Node {
 		return color;
 	}
 	
+	public String toString(){
+		return this.key+"";
+	}
 	//Add more functions as  you see fit.
 }
