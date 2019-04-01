@@ -38,7 +38,7 @@ public class Intervals {
 		
 		rbTree.Insert(begin);
 		rbTree.Insert(end);
-		inters.add(new Interval(ID, new Endpoint(a), new Endpoint(b)));
+		inters.add(new Interval(ID, new Endpoint(a), new Endpoint(b), begin, end));
 		ID++;
 		rbTree.size += 2;
 	}
@@ -57,7 +57,14 @@ public class Intervals {
 	 */
 	boolean intervalDelete(int intervalID) {
 		//TODO: Complete it as needed (This is optional so you can leave it as it is)
-		rbTree.size -= 2;
+		if (!inters.get(intervalID-1).equals(null)) {
+			Interval temp = inters.get(intervalID-1);
+			rbTree.Delete(temp.leftNode);
+			rbTree.Delete(temp.rightNode);
+			inters.set(intervalID-1, null);
+			rbTree.size -= 2;
+			return true;
+		}
 		return false;
 	}
 	
@@ -101,10 +108,13 @@ public class Intervals {
 	class Interval{
 		public int id;
 		public Endpoint left, right;
-		public Interval(int id, Endpoint left, Endpoint right) {
+		public Node rightNode, leftNode;
+		public Interval(int id, Endpoint left, Endpoint right, Node leftNode, Node rightNode) {
 			this.id = id;
 			this.left = left;
 			this.right = right;
+			this.rightNode = rightNode;
+			this.leftNode = leftNode;
 		}
 	}
 }

@@ -218,7 +218,7 @@ public class RBTree {
 		v.parent = u.parent;
 	}
 	 
-	private void Delete(Node z) {
+	public void Delete(Node z) {
 		Node y = z;
 		Node x;
 		int yOrigColor = y.color;
