@@ -2,8 +2,9 @@ import java.util.ArrayList;
 
 /**
  * Team members:
- * @author John Doe
- * @author Jane Doe
+ * @author Max Medberry
+ * @author Kenneth Lange
+ * @author Daniil Olshanskyi
  * 
  * A wrapper class for RBTree
  */
