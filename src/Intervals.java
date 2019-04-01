@@ -40,6 +40,7 @@ public class Intervals {
 		rbTree.Insert(end);
 		inters.add(new Interval(ID, new Endpoint(a), new Endpoint(b)));
 		ID++;
+		rbTree.size += 2;
 	}
 	
 	/**
@@ -56,6 +57,7 @@ public class Intervals {
 	 */
 	boolean intervalDelete(int intervalID) {
 		//TODO: Complete it as needed (This is optional so you can leave it as it is)
+		rbTree.size -= 2;
 		return false;
 	}
 	

@@ -9,7 +9,7 @@ public class RBTree {
 	//Color: 1 is black, 0 is red
 	private Node nil;
 	private Node root;
-	private int size;
+	public int size=0;
 	
 	/**
 	 * RB Tree constructor. It initializes nil node as well.
