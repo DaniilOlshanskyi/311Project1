@@ -16,8 +16,7 @@ public class RBTree {
 	 * RB Tree constructor. It initializes nil node as well.
 	 */
 	public RBTree() {
-		//TODO: FIGURE OUT IF 0 AS NIL KEY IS OK and 0 AS NIL P OK
-		nil = new Node(0,0);
+		nil = new Node(0,0,null);
 		nil.color=1;
 		nil.height=-1;
 		root=nil;

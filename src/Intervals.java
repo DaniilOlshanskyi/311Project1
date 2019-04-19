@@ -34,12 +34,12 @@ public class Intervals {
 	 */
 	void intervalInsert(int a, int b) {
 		//TODO make this use endpoints
-		Node begin = new Node(a, 1);
-		Node end = new Node(b, -1);
+		Node begin = new Node(a, 1, new Endpoint(a));
+		Node end = new Node(b, -1, new Endpoint(b));
 		
 		rbTree.Insert(begin);
 		rbTree.Insert(end);
-		inters.add(new Interval(ID, new Endpoint(a), new Endpoint(b), begin, end));
+		inters.add(new Interval(ID, begin.getEndpoint(),end.getEndpoint(), begin, end));
 		ID++;
 		rbTree.size += 2;
 	}

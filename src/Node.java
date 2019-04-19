@@ -22,10 +22,10 @@ public class Node {
 	public int color;
 	public int height;
 	
+	public Endpoint ep;
 	
 	
-	
-	public Node(int key, int p) {
+	public Node(int key, int p, Endpoint ep) {
 		this.key = key;
 		this.p = p;
 		this.color = 0;
@@ -33,6 +33,7 @@ public class Node {
 		this.left = null;
 		this.right = null;
 		this.height=0;
+		this.ep=ep;
 	}
 
 	/**
@@ -96,8 +97,7 @@ public class Node {
 	 * @return
 	 */
 	public Endpoint getEndpoint() {
-		//TODO: Modify it accordingly.
-		return null;
+		return this.ep;
 	}
 	
 	/**
