@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class CommunicationsMonitor {
 	 * Constructor with no parameters
 	 */
 	public CommunicationsMonitor() {
-		this.triplets = new ArrayList<Triplet>();
+		this.triplets = new LinkedList<Triplet>();
 	}
 
 	/**
@@ -53,6 +54,8 @@ public class CommunicationsMonitor {
 	public void createGraph() {
 		// Instantiate an array of the size we already know
 		triplets_sorted = new Triplet[triplets.size()];
+		//Copy triplets from list to array for more efficient use.
+		triplets.toArray(triplets_sorted);
 		// Merge-sort the triplets by the timestamp
 		triplets_sorted = triSort(triplets_sorted);
 		// Instantiate the map now
