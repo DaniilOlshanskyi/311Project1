@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -9,13 +10,25 @@ import java.util.List;
  */
 public class ComputerNode {
 
+	public int id;
+	public int timestamp;
+	//List of nodes to which this one has and outgoing edge
+	public List<ComputerNode> list;
+	
+	
+	public ComputerNode(int id, int timestamp){
+		this.list = new LinkedList<ComputerNode>();
+		this.id=id;
+		this.timestamp=timestamp;
+	}
+	
     /**
      * Returns the ID of the associated computer.
      *
      * @return Associated Computer's ID
      */
     public int getID() {
-        return 0;
+        return id;
     }
 
     /**
@@ -24,7 +37,7 @@ public class ComputerNode {
      * @return Timestamp for the node
      */
     public int getTimestamp() {
-        return 0;
+        return timestamp;
     }
 
     /**
@@ -33,7 +46,7 @@ public class ComputerNode {
      * @return a list of ComputerNode objects that have an edge from this to the nodes in the list.
      */
     public List<ComputerNode> getOutNeighbors() {
-        return null;
+        return list;
     }
 
 }
