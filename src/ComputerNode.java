@@ -49,4 +49,7 @@ public class ComputerNode {
         return list;
     }
 
+    public void addNeighbor(ComputerNode nd){
+    	list.add(nd);
+    }
 }

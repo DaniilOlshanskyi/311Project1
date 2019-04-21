@@ -14,11 +14,13 @@ import java.util.List;
 public class CommunicationsMonitor {
 
 	// A list to store unsorted triplets
-	private List<Triplet> triplets;
+	public List<Triplet> triplets;
 	// An array to store sorted triplets
-	private Triplet[] triplets_sorted;
+	public Triplet[] triplets_sorted;
 	// Map to associate computers with lists of once they communicate with
-	private HashMap<Integer, List<ComputerNode>> map;
+	public HashMap<Integer, List<ComputerNode>> map;
+	//Graph has been created
+	private boolean graphCreated;
 
 	/**
 	 * Constructor with no parameters
@@ -44,7 +46,9 @@ public class CommunicationsMonitor {
 	public void addCommunication(int c1, int c2, int timestamp) {
 		// Add a newly-created triplet to our list to be sorted and processed
 		// later.
-		triplets.add(new Triplet(c1, c2, timestamp));
+		if (!graphCreated){
+			triplets.add(new Triplet(c1, c2, timestamp));
+		}
 	}
 
 	/**
@@ -52,6 +56,7 @@ public class CommunicationsMonitor {
 	 * should run in O(n + m log m) time.
 	 */
 	public void createGraph() {
+		graphCreated = true;
 		// Instantiate an array of the size we already know
 		triplets_sorted = new Triplet[triplets.size()];
 		//Copy triplets from list to array for more efficient use.
@@ -189,7 +194,7 @@ public class CommunicationsMonitor {
 	 *         objects.
 	 */
 	public HashMap<Integer, List<ComputerNode>> getComputerMapping() {
-		return null;
+		return map;
 	}
 
 	/**
@@ -201,11 +206,11 @@ public class CommunicationsMonitor {
 	 * @return ComputerNode objects associated with c.
 	 */
 	public List<ComputerNode> getComputerMapping(int c) {
-		return null;
+		return map.get(c);
 	}
 
 	// A short helper-container to hold triplets before they are processed
-	private class Triplet {
+	public class Triplet {
 
 		public int first, second, timestamp;
 
