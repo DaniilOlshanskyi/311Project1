@@ -19,7 +19,7 @@ public class CommunicationsMonitor {
 	public Triplet[] triplets_sorted;
 	// Map to associate computers with lists of once they communicate with
 	public HashMap<Integer, List<ComputerNode>> map;
-	//Graph has been created
+	// Graph has been created
 	private boolean graphCreated;
 
 	/**
@@ -27,6 +27,8 @@ public class CommunicationsMonitor {
 	 */
 	public CommunicationsMonitor() {
 		this.triplets = new LinkedList<Triplet>();
+		// Instantiate the map now
+		map = new HashMap<Integer, List<ComputerNode>>();
 	}
 
 	/**
@@ -46,7 +48,7 @@ public class CommunicationsMonitor {
 	public void addCommunication(int c1, int c2, int timestamp) {
 		// Add a newly-created triplet to our list to be sorted and processed
 		// later.
-		if (!graphCreated){
+		if (!graphCreated) {
 			triplets.add(new Triplet(c1, c2, timestamp));
 		}
 	}
@@ -59,92 +61,92 @@ public class CommunicationsMonitor {
 		graphCreated = true;
 		// Instantiate an array of the size we already know
 		triplets_sorted = new Triplet[triplets.size()];
-		//Copy triplets from list to array for more efficient use.
+		// Copy triplets from list to array for more efficient use.
 		triplets.toArray(triplets_sorted);
 		// Merge-sort the triplets by the timestamp
 		triplets_sorted = triSort(triplets_sorted);
-		// Instantiate the map now
-		map = new HashMap<Integer, List<ComputerNode>>();
 		// Scan the triplets:
 		for (int i = 0; i < triplets_sorted.length; i++) {
 			// Be ready to store lists associated with first and second
 			// computers
 			List<ComputerNode> first_list;
 			List<ComputerNode> second_list;
+
+			ComputerNode first = null;
+			ComputerNode second = null;
 			// If there is no mapping for the first computer - create it
 			if (!map.containsKey(triplets_sorted[i].first)) {
+				// Create new array-list to store nodes
 				map.put(triplets_sorted[i].first, new ArrayList<ComputerNode>());
+				// create new node to represent the first one in this triplet
+				first = new ComputerNode(triplets_sorted[i].first, triplets_sorted[i].timestamp);
+				// Obtain the list from the map
+				first_list = map.get(triplets_sorted[i].first);
+				// add first node to the map
+				first_list.add(first);
+			} else {// If there is mapping for this node - check if our first is
+					// the same as last in list(since list is sorted)
+				// Obtain the list from the map
+				first_list = map.get(triplets_sorted[i].first);
+				// If same timestamp - than they are equal, just get the last
+				// one from the list
+				if (first_list.get(first_list.size()-1).getTimestamp() == triplets_sorted[i].timestamp) {
+					first = first_list.get(first_list.size()-1);
+				} else {// If different timestamp(i.e. last in list has lower
+						// timestamp than the new one) - create a new one and
+						// append to the list
+					first = new ComputerNode(triplets_sorted[i].first, triplets_sorted[i].timestamp);
+					first_list.add(first);
+				}
 			}
-			// Obtain the list from the map
-			first_list = map.get(triplets_sorted[i].first);
 
 			// If there is no mapping for the second computer - create it
 			if (!map.containsKey(triplets_sorted[i].second)) {
+				// Create new array-list to store nodes
 				map.put(triplets_sorted[i].second, new ArrayList<ComputerNode>());
-			}
-			// Obtain the list from the map
-			second_list = map.get(triplets_sorted[i].second);
-			
-			//Search for the first node 
-			ComputerNode first = null;
-			//For each node in the associated list,
-			for (int j = 0; j < first_list.size(); j++) {
-				//Get the node from the list
-				ComputerNode temp = first_list.get(j);
-				//If node in list has the same id and timestamp - no need to create a new one, take it and break the loop
-				if (temp.getID()==triplets_sorted[i].first && temp.getTimestamp()==triplets_sorted[i].timestamp){
-					first = temp;
-					break;
+				// create new node to represent the second one in this triplet
+				second = new ComputerNode(triplets_sorted[i].second, triplets_sorted[i].timestamp);
+				// Obtain the list from the map
+				second_list = map.get(triplets_sorted[i].second);
+				// add second node to the map
+				second_list.add(second);
+			} else {// If there is mapping for this node - check if our second
+					// is
+					// the same as last in list(since list is sorted)
+				// Obtain the list from the map
+				second_list = map.get(triplets_sorted[i].second);
+				// If same timestamp - than they are equal, just get the last
+				// one from the list
+				if (second_list.get(second_list.size()-1).getTimestamp() == triplets_sorted[i].timestamp) {
+					second = second_list.get(second_list.size()-1);
+				} else {// If different timestamp(i.e. last in list has lower
+						// timestamp than the new one) - create a new one and
+						// append to the list
+					second = new ComputerNode(triplets_sorted[i].second, triplets_sorted[i].timestamp);
+					second_list.add(second);
 				}
 			}
-			//If such node does not exist in the list - create it and add to the list
-			if (first==null){
-				first = new ComputerNode(triplets_sorted[i].first,triplets_sorted[i].timestamp);
-				first_list.add(first);
-				//If this was not the first in the list - add reference to it for other nodes in the list.
-				//!!! INCLUDING ITSELF !!!
-				if (first_list.size()>1){
-					for (int j = 0; j<first_list.size()-1; j++){
-						first_list.get(j).list.add(first);
-					}
-				}
-			}
-			
-			
-			//Search for the second node 
-			ComputerNode second = null;
-			//For each node in the associated list,
-			for (int j = 0; j < second_list.size(); j++) {
-				//Get the node from the list
-				ComputerNode temp = second_list.get(j);
-				//If node in list has the same id and timestamp - no need to create a new one, take it and break the loop
-				if (temp.getID()==triplets_sorted[i].second && temp.getTimestamp()==triplets_sorted[i].timestamp){
-					second = temp;
-					break;
-				}
-			}
-			//If such node does not exist in the list - create it and add to the list
-			if (second==null){
-				second = new ComputerNode(triplets_sorted[i].second,triplets_sorted[i].timestamp);
-				second_list.add(first);
-				//If this was not the first in the list - add reference to it for other nodes in the list.
-				//!!! INCLUDING ITSELF !!!
-				if (second_list.size()>1){
-					for (int j = 0; j<second_list.size()-1; j++){
-						second_list.get(j).list.add(second);
-					}
-				}
-			}
-			
-			
-			/*!!!
-			 * At this point first_list holds list of nodes associated with first id, first holds the node
-			 * associated with this id and this timestamp. second_list and second same for the second id respectively.
+
+			/*
+			 * !!! At this point first_list holds list of nodes associated with
+			 * first id, first holds the node associated with this id and this
+			 * timestamp. second_list and second same for the second id
+			 * respectively.
 			 */
-			
-			//Add directed edges respectively.
-			first.list.add(second);
-			second.list.add(first);
+
+			// Add directed edges respectively.
+			first.addNeighbor(second);;
+			second.addNeighbor(first);;
+
+			// If there was another one in the list - add a reference to the new
+			// one to the neighbors list of the previously last in the list
+			// (last-1 now)
+			if (first_list.size() > 1) {
+				first_list.get((first_list.size() - 2)).addNeighbor(first);;
+			}
+			if (second_list.size() > 1) {
+				second_list.get((second_list.size() - 2)).addNeighbor(second);;
+			}
 			
 		}
 	}
@@ -206,7 +208,10 @@ public class CommunicationsMonitor {
 	 * @return ComputerNode objects associated with c.
 	 */
 	public List<ComputerNode> getComputerMapping(int c) {
-		return map.get(c);
+		if (map.containsKey(c)){
+			return map.get(c);
+		}
+		return null;
 	}
 
 	// A short helper-container to hold triplets before they are processed
@@ -218,6 +223,10 @@ public class CommunicationsMonitor {
 			this.first = first;
 			this.second = second;
 			this.timestamp = timestamp;
+		}
+		
+		public String toString(){
+			return "("+first+","+second+","+timestamp+")";
 		}
 	}
 
@@ -275,12 +284,12 @@ public class CommunicationsMonitor {
 		}
 		// If left depleted, add leftovers from right
 		if (i >= left.length) {
-			for (int m = j; k < right.length; k++) {
+			for (int m = j; m < right.length; m++) {
 				arr[k] = right[m];
 				k++;
 			}
 		} else { // Else, add leftovers from left
-			for (int m = i; k < left.length; k++) {
+			for (int m = i; m < left.length; m++) {
 				arr[k] = left[m];
 				k++;
 			}

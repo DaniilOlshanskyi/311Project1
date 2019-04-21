@@ -52,4 +52,8 @@ public class ComputerNode {
     public void addNeighbor(ComputerNode nd){
     	list.add(nd);
     }
+    
+    public String toString(){
+    	return "("+id+","+timestamp+")";
+    }
 }
