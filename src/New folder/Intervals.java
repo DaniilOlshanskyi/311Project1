@@ -32,7 +32,7 @@ public class Intervals {
 	 * @param a
 	 * @param b
 	 */
-	void intervalInsert(int a, int b) {
+	public void intervalInsert(int a, int b) {
 		//TODO make this use endpoints
 		Node begin = new Node(a, 1, new Endpoint(a));
 		Node end = new Node(b, -1, new Endpoint(b));
@@ -41,7 +41,7 @@ public class Intervals {
 		rbTree.Insert(end);
 		inters.add(new Interval(ID, begin.getEndpoint(),end.getEndpoint(), begin, end));
 		ID++;
-		rbTree.size += 2;
+		//rbTree.size += 2;
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class Intervals {
 	 * @param intervalID
 	 * @return
 	 */
-	boolean intervalDelete(int intervalID) {
+	public boolean intervalDelete(int intervalID) {
 		//TODO: Complete it as needed (This is optional so you can leave it as it is)
 		if (!inters.get(intervalID-1).equals(null)) {
 			Interval temp = inters.get(intervalID-1);
@@ -73,16 +73,16 @@ public class Intervals {
 	 * Finds the endpoint that has maximum overlap and returns its value. Thismethod should run in constant time.
 	 * @return
 	 */
-	int findPOM() {
+	public int findPOM() {
 		//TODO: Modify it accordingly.
-		return rbTree.getRoot().getEmax();
+		return rbTree.getRoot().getEmax().getValue();
 	}
 	
 	/**
 	 * Returns the red-black tree used, which is an object of typeRBTree.
 	 * @return
 	 */
-	RBTree getRBTree() {
+	public RBTree getRBTree() {
 		return rbTree;
 	}
 	

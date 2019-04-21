@@ -13,7 +13,7 @@ public class Node {
 	private int p;
 	public int val;
 	public int maxval;
-	public int emax;
+	public Endpoint emax;
 	
 	public Node parent;
 	public Node left;
@@ -106,11 +106,11 @@ public class Node {
 	 * provides a point of maximum overlap.
 	 * @return
 	 */
-	public int getEmax() {
-		return emax;
+	public Endpoint getEmax() {
+		return this.emax;
 	}
 	
-	public void setEmax(int e) {
+	public void setEmax(Endpoint e) {
 		emax = e; 
 	}
 	

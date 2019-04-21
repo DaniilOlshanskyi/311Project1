@@ -18,7 +18,7 @@ public class RBTree {
 	public RBTree() {
 		nil = new Node(0,0,null);
 		nil.color=1;
-		nil.height=-1;
+		nil.height=0;
 		root=nil;
 	}
 	
@@ -54,11 +54,12 @@ public class RBTree {
 	 */
 	public int getHeight() {
 		//TODO: Modify it accordingly.
-		return 0;
+		return root.height;
 	}
 	
 	public void Insert(Node z){
 		//TODO: update val, maxval, emax accordingly to project specifications
+		size++;
 		Node y = nil;
 		Node x = this.root;
 		while (!x.equals(nil)){
@@ -85,7 +86,7 @@ public class RBTree {
 		ClimbHeight(z);
 	}
 	
-	private void InsertFixup(Node z){
+	public  void InsertFixup(Node z){
 		while (z.parent.color==0){
 			if (z.parent.equals(z.parent.parent.left)){
 				Node y = z.parent.parent.right;
@@ -124,7 +125,7 @@ public class RBTree {
 		this.root.color = 1;
 	}
 	
-	private void LeftRotate(Node z){
+	public  void LeftRotate(Node z){
 		z.height--;
 		Node y = z.right;
 		z.right = y.left;
@@ -145,7 +146,7 @@ public class RBTree {
 		RotationCalculation(z);
 	}
 	
-	private void RightRotate(Node z){
+	public  void RightRotate(Node z){
 		z.height--;
 		Node y = z.left;
 		z.left = y.right;
@@ -168,7 +169,7 @@ public class RBTree {
 		
 	}
 	
-	private void RotationCalculation(Node z) {
+	public  void RotationCalculation(Node z) {
 		if (z.right != nil) {
 			//do calculation for z.right
 			CalculateValue(z.right);
@@ -187,7 +188,7 @@ public class RBTree {
 	 * Calculates and returns the value of the node
 	 * @param z
 	 */
-	private void CalculateValue(Node z) {
+	public  void CalculateValue(Node z) {
 		z.val =  z.getP() + z.left.getVal() + z.right.getVal();
 	}
 	
@@ -195,13 +196,13 @@ public class RBTree {
 	 * Calculates and returns the max value of the node
 	 * @param z
 	 */
-	private void CalculateMaxValue(Node z) {
+	public  void CalculateMaxValue(Node z) {
 		int max =  Math.max(z.left.getMaxVal(), Math.max(z.left.getVal() + z.getP(), z.left.getVal() + z.getP() + z.right.getMaxVal()));
 		if (max == z.left.getMaxVal()) {
 			z.setEmax(z.getLeft().getEmax());
 		}
 		else if (max == z.left.getVal() + z.getP()) {
-			z.setEmax(z.getKey());
+			z.setEmax(z.getEndpoint());
 		}
 		else if (max == z.left.getVal() + z.getP() + z.right.getMaxVal()) {
 			z.setEmax(z.getRight().getEmax());
@@ -209,7 +210,7 @@ public class RBTree {
 		z.maxval = max;
 	}
 	 
-	private void Transplant(Node u, Node v) {
+	public  void Transplant(Node u, Node v) {
 		if (u.parent.equals(this.nil)) {
 			this.root = v;
 		} else if (u.equals(u.parent.left)) {
@@ -220,7 +221,7 @@ public class RBTree {
 		v.parent = u.parent;
 	}
 	 
-	public void Delete(Node z) {
+	public  void Delete(Node z) {
 		Node y = z;
 		Node x;
 		int yOrigColor = y.color;
@@ -252,7 +253,7 @@ public class RBTree {
 		Climb(x);
 	}
 	
-	private void DeleteFixup(Node x) {
+	public  void DeleteFixup(Node x) {
 		while (!x.equals(root) && x.color==1) {
 			if (x.equals(x.parent.left)) {
 				Node w = x.parent.left;
@@ -308,13 +309,13 @@ public class RBTree {
 		x.color = 1;
 	}
 	
-	private Node Minimum(Node x) {
+	public  Node Minimum(Node x) {
 		while (!x.left.equals(nil)) {
 			x = x.left;
 		}
 		return x;
 	}
-	private void Climb(Node z) {
+	public  void Climb(Node z) {
 		while (!z.equals(nil)) {
 			CalculateMaxValue(z);
 			CalculateValue(z);
@@ -322,7 +323,7 @@ public class RBTree {
 		}
 	}
 	
-	private void ClimbHeight(Node z){
+	public  void ClimbHeight(Node z){
 			while (!z.equals(nil)){
 				z.height=Math.max(z.left.height, z.right.height)+1;
 				z=z.parent;
