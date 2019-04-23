@@ -181,7 +181,37 @@ public class CommunicationsMonitor {
 	 *         null otherwise.
 	 */
 	public List<ComputerNode> queryInfection(int c1, int c2, int x, int y) {
+		//c1 = node infected at time x
+		//c2 = node to be checked at time y
+		if (map.containsKey(c1)) {
+			for(int i=0; i<map.get(c1).size(); i++) {
+				if (map.get(c1).get(i).getTimestamp()>=x) {
+					List<ComputerNode> checkedList = new ArrayList<>();
+					boolean contains =false;
+					contains = checkNode(map.get(c1).get(i), checkedList, y, c2, contains);
+					if (contains) {
+						return checkedList;
+					} else {
+						return null;
+					}
+				}
+			}
+		}
+		
 		return null;
+	}
+	
+	//helper method for queryInfection method
+	private boolean checkNode(ComputerNode node, List<ComputerNode> checkedList, int y, int c2, boolean contains) {
+		if (!checkedList.contains(node) && node.getTimestamp()<=y) {
+			if (node.getID()==c2&&node.getTimestamp()==y) 
+				contains=true;
+			checkedList.add(node);
+			for (int i = 0; i<node.getOutNeighbors().size(); i++) {
+				checkNode(node.getOutNeighbors().get(i), checkedList, y, c2, contains);
+			}
+		}
+		return contains;
 	}
 
 	/**

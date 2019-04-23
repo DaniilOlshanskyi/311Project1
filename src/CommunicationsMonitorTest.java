@@ -131,46 +131,46 @@ public class CommunicationsMonitorTest {
         assertEquals(12, c4Twelve.getOutNeighbors().get(0).getTimestamp());
     }
 
-//    @Test
-//    public void queryInfectionExampleOne() {
-//        // Create Example 1 graph
-//        monitor = createExampleOne();
-//
-//        // Test that C3 gets infected at time = 8 if C1 is infected at time = 2
-//        List<ComputerNode> infectedList = monitor.queryInfection(1, 3, 2, 8);
-//        assertEquals(5, infectedList.size());
-//        assertEquals(1, infectedList.get(0).getID());
-//        assertEquals(4, infectedList.get(0).getTimestamp());
-//        assertEquals(2, infectedList.get(1).getID());
-//        assertEquals(4, infectedList.get(1).getTimestamp());
-//        assertEquals(2, infectedList.get(2).getID());
-//        assertEquals(8, infectedList.get(2).getTimestamp());
-//        assertEquals(4, infectedList.get(3).getID());
-//        assertEquals(8, infectedList.get(3).getTimestamp());
-//        assertEquals(3, infectedList.get(4).getID());
-//        assertEquals(8, infectedList.get(4).getTimestamp());
-//    }
+    @Test
+    public void queryInfectionExampleOne() {
+        // Create Example 1 graph
+        monitor = createExampleOne();
 
-//    @Test
-//    public void queryInfectionExampleTwo() {
-//        // Create Example 2 graph
-//        monitor = createExampleTwo();
-//
-//        // If C1 is infected at time = 2, C3 does not get infected in the time
-//        // observed...
-//        List<ComputerNode> infectedList = monitor.queryInfection(1, 3, 2, 15);
-//        assertEquals(null, infectedList);
-//
-//        // But C2 does
-//        infectedList = monitor.queryInfection(1, 2, 2, 15);
-//        assertEquals(3, infectedList.size());
-//        assertEquals(1, infectedList.get(0).getID());
-//        assertEquals(12, infectedList.get(0).getTimestamp());
-//        assertEquals(1, infectedList.get(1).getID());
-//        assertEquals(14, infectedList.get(1).getTimestamp());
-//        assertEquals(2, infectedList.get(2).getID());
-//        assertEquals(14, infectedList.get(2).getTimestamp());
-//    }
+        // Test that C3 gets infected at time = 8 if C1 is infected at time = 2
+        List<ComputerNode> infectedList = monitor.queryInfection(1, 3, 2, 8);
+        assertEquals(5, infectedList.size());
+        assertEquals(1, infectedList.get(0).getID());
+        assertEquals(4, infectedList.get(0).getTimestamp());
+        assertEquals(2, infectedList.get(1).getID());
+        assertEquals(4, infectedList.get(1).getTimestamp());
+        assertEquals(2, infectedList.get(2).getID());
+        assertEquals(8, infectedList.get(2).getTimestamp());
+        assertEquals(4, infectedList.get(3).getID());
+        assertEquals(8, infectedList.get(3).getTimestamp());
+        assertEquals(3, infectedList.get(4).getID());
+        assertEquals(8, infectedList.get(4).getTimestamp());
+    }
+
+    @Test
+    public void queryInfectionExampleTwo() {
+        // Create Example 2 graph
+        monitor = createExampleTwo();
+
+        // If C1 is infected at time = 2, C3 does not get infected in the time
+        // observed...
+        List<ComputerNode> infectedList = monitor.queryInfection(1, 3, 2, 15);
+        assertEquals(null, infectedList);
+
+        // But C2 does
+        infectedList = monitor.queryInfection(1, 2, 2, 15);
+        assertEquals(3, infectedList.size());
+        assertEquals(1, infectedList.get(0).getID());
+        assertEquals(12, infectedList.get(0).getTimestamp());
+        assertEquals(1, infectedList.get(1).getID());
+        assertEquals(14, infectedList.get(1).getTimestamp());
+        assertEquals(2, infectedList.get(2).getID());
+        assertEquals(14, infectedList.get(2).getTimestamp());
+    }
 
     @Test
     public void getComputerMapping() {
