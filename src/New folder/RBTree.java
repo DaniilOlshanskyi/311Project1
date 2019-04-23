@@ -16,9 +16,10 @@ public class RBTree {
 	 * RB Tree constructor. It initializes nil node as well.
 	 */
 	public RBTree() {
-		nil = new Node(0,0,null);
+		nil = new Node(0,0,new Endpoint(0));
 		nil.color=1;
 		nil.height=0;
+		nil.setEmax(nil.getEndpoint());
 		root=nil;
 	}
 	
@@ -66,6 +67,8 @@ public class RBTree {
 			y=x;
 			if (z.getKey()<x.getKey()){
 				x = x.left;
+			} else if (z.getKey()==x.getKey() && z.getP()==1){
+				x = x.left;
 			} else {
 				x = x.right;
 			}
@@ -75,7 +78,10 @@ public class RBTree {
 			this.root = z;
 		} else if (z.getKey()<y.getKey()){
 			y.left = z;
-		} else {
+		} else if (z.getKey()==y.getKey() && z.getP()==1){
+			y.left=z;
+		}
+		else {
 			y.right = z;
 		}
 		z.left=nil;

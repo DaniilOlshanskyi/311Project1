@@ -111,7 +111,7 @@ public class Node {
 	}
 	
 	public void setEmax(Endpoint e) {
-		emax = e; 
+		this.emax = e; 
 	}
 	
 	/**
