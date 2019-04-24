@@ -25,6 +25,9 @@ public class CommunicationsMonitor {
 	private boolean graphCreated;
 	//Storage for all nodes;
 	List<ComputerNode> allNodes;
+	boolean contained = false;
+	LinkedList<ComputerNode> returnList;
+	
 
 	/**
 	 * Constructor with no parameters
@@ -189,41 +192,50 @@ public class CommunicationsMonitor {
 	 * @return List of the path in the graph (infection path) if one exists,
 	 *         null otherwise.
 	 */
-	public List<ComputerNode> queryInfection2(int c1, int c2, int x, int y) {
+	public List<ComputerNode> queryInfection1(int c1, int c2, int x, int y) {
 		//c1 = node infected at time x
 		//c2 = node to be checked at time y
-		if (map.containsKey(c1)) {
-			for(int i=0; i<map.get(c1).size(); i++) {
-				if (map.get(c1).get(i).getTimestamp()>=x) {
-					List<ComputerNode> checkedList = new ArrayList<>();
-					boolean contains =false;
-					contains = checkNode(map.get(c1).get(i), checkedList, y, c2, contains);
-					if (contains) {
-						return checkedList;
-					} else {
-						return null;
+		returnList = new LinkedList<ComputerNode>();
+		if (!map.containsKey(c1) || !map.containsKey(c2)) {
+			return null;
+		}
+		ComputerNode start = null;
+		for (int i=0; i<map.get(c1).size(); i++) {
+			if (map.get(c1).get(i).getTimestamp()>=x){
+				start = map.get(c1).get(i);
+				break;
+			}
+		}
+		if (start == null) {
+			return null;
+		}
+		start.setColor(1);
+		DFS(start, c2, y);
+		if (returnList.isEmpty()) {
+			return null;
+		}
+		return returnList;
+	}
+	// Works, but if I try using it twice the colors aren't reset so breaks... :(
+	private void DFS(ComputerNode start, int end, int y){
+		for (int i=0; i<start.getOutNeighbors().size(); i++) {
+			ComputerNode check = start.getOutNeighbors().get(i);
+			if(check.getColor()==0) {
+				check.setColor(1);
+				check.setPred(start);
+				if (check.getID()==end && check.getTimestamp()<=y){
+					while (check.getPred()!=null) {
+						returnList.addFirst(check);
+						check=check.getPred();
 					}
+					returnList.addFirst(check);
+				} else {
+					DFS(check, end, y);
 				}
 			}
 		}
-		
-		return null;
 	}
 	
-	//helper method for queryInfection method
-	private boolean checkNode(ComputerNode node, List<ComputerNode> checkedList, int y, int c2, boolean contains) {
-		if (!checkedList.contains(node) && node.getTimestamp()<=y) {
-			if (node.getID()==c2&&node.getTimestamp()==y) 
-				contains=true;
-			checkedList.add(node);
-			for (int i = 0; i<node.getOutNeighbors().size(); i++) {
-				checkNode(node.getOutNeighbors().get(i), checkedList, y, c2, contains);
-			}
-		}
-		return contains;
-	}
-	
-
 	/**
 	 * Determines whether computer c2 could be infected by time y if computer c1
 	 * was infected at time x. If so, the method returns an ordered list of
