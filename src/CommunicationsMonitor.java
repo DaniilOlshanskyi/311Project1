@@ -3,15 +3,14 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * The CommunicationsMonitor class represents the graph G built to answer
  * infection queries.
  *
- * @author
- * @author
- * @author
+ * @author Daniil Olshanskyi
+ * @author Kenneth Lange
+ * @author Max Medberry
  */
 public class CommunicationsMonitor {
 

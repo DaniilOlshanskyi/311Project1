@@ -4,9 +4,9 @@ import java.util.List;
 /**
  * The ComputerNode class represents the nodes of the graph G, which are pairs (Ci, t).
  *
- * @author
- * @author
- * @author
+ * @author Daniil Olshanskyi
+ * @author Kenneth Lange
+ * @author Max Medberry
  */
 public class ComputerNode {
 
