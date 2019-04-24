@@ -163,35 +163,7 @@ public class CommunicationsMonitor {
 		}
 	}
 
-	/**
-	 * Determines whether computer c2 could be infected by time y if computer c1
-	 * was infected at time x. If so, the method returns an ordered list of
-	 * ComputerNode objects that represents the transmission sequence. This
-	 * sequence is a path in graph G. The first ComputerNode object on the path
-	 * will correspond to c1. Similarly, the last ComputerNode object on the
-	 * path will correspond to c2. If c2 cannot be infected, return null.
-	 * <p>
-	 * Example 3. In Example 1, an infection path would be (C1, 4), (C2, 4),
-	 * (C2, 8), (C4, 8), (C3, 8)
-	 * <p>
-	 * This method can assume that it will be called only after createGraph()
-	 * and that x <= y. This method must run in O(m) time. This method can also
-	 * be called multiple times with different inputs once the graph is
-	 * constructed (i.e., once createGraph() has been invoked).
-	 *
-	 * @param c1
-	 *            ComputerNode object to represent the Computer that is
-	 *            hypothetically infected at time x.
-	 * @param c2
-	 *            ComputerNode object to represent the Computer to be tested for
-	 *            possible infection if c1 was infected.
-	 * @param x
-	 *            Time c1 was hypothetically infected.
-	 * @param y
-	 *            Time c2 is being tested for being infected.
-	 * @return List of the path in the graph (infection path) if one exists,
-	 *         null otherwise.
-	 */
+	/* DFS implementation, Stack overflow damger.
 	public List<ComputerNode> queryInfection1(int c1, int c2, int x, int y) {
 		//c1 = node infected at time x
 		//c2 = node to be checked at time y
@@ -244,6 +216,8 @@ public class CommunicationsMonitor {
 		}
 	}
 	
+	
+	*/
 	/**
 	 * Determines whether computer c2 could be infected by time y if computer c1
 	 * was infected at time x. If so, the method returns an ordered list of
