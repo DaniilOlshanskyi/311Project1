@@ -195,6 +195,14 @@ public class CommunicationsMonitor {
 	public List<ComputerNode> queryInfection1(int c1, int c2, int x, int y) {
 		//c1 = node infected at time x
 		//c2 = node to be checked at time y
+		int size = allNodes.size();
+		Iterator<ComputerNode> iter = allNodes.iterator();
+		
+		for (int i = 0; i<size; i++){
+			ComputerNode temp = iter.next();
+			temp.setColor(0);
+			temp.setPred(null);
+		}
 		returnList = new LinkedList<ComputerNode>();
 		if (!map.containsKey(c1) || !map.containsKey(c2)) {
 			return null;
