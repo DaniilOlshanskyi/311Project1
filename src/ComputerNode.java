@@ -14,12 +14,16 @@ public class ComputerNode {
 	public int timestamp;
 	//List of nodes to which this one has and outgoing edge
 	public List<ComputerNode> list;
+	public int color;
+	public ComputerNode pred;
 	
 	
 	public ComputerNode(int id, int timestamp){
 		this.list = new LinkedList<ComputerNode>();
 		this.id=id;
 		this.timestamp=timestamp;
+		this.color=0;
+		this.pred=null;
 	}
 	
     /**
@@ -55,5 +59,21 @@ public class ComputerNode {
     
     public String toString(){
     	return "("+id+","+timestamp+")";
+    }
+    
+    public void setColor(int c){
+    	color=c;
+    }
+    
+    public int getColor(){
+    	return color;
+    }
+    
+    public void setPred(ComputerNode c){
+    	pred=c;
+    }
+    
+    public ComputerNode getPred(){
+    	return pred;
     }
 }

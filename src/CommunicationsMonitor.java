@@ -1,7 +1,9 @@
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * The CommunicationsMonitor class represents the graph G built to answer
@@ -21,6 +23,8 @@ public class CommunicationsMonitor {
 	public HashMap<Integer, List<ComputerNode>> map;
 	// Graph has been created
 	private boolean graphCreated;
+	//Storage for all nodes;
+	List<ComputerNode> allNodes;
 
 	/**
 	 * Constructor with no parameters
@@ -29,6 +33,7 @@ public class CommunicationsMonitor {
 		this.triplets = new LinkedList<Triplet>();
 		// Instantiate the map now
 		map = new HashMap<Integer, List<ComputerNode>>();
+		allNodes=new LinkedList<ComputerNode>();
 	}
 
 	/**
@@ -80,6 +85,7 @@ public class CommunicationsMonitor {
 				map.put(triplets_sorted[i].first, new ArrayList<ComputerNode>());
 				// create new node to represent the first one in this triplet
 				first = new ComputerNode(triplets_sorted[i].first, triplets_sorted[i].timestamp);
+				allNodes.add(first);
 				// Obtain the list from the map
 				first_list = map.get(triplets_sorted[i].first);
 				// add first node to the map
@@ -96,6 +102,7 @@ public class CommunicationsMonitor {
 						// timestamp than the new one) - create a new one and
 						// append to the list
 					first = new ComputerNode(triplets_sorted[i].first, triplets_sorted[i].timestamp);
+					allNodes.add(first);
 					first_list.add(first);
 				}
 			}
@@ -106,6 +113,7 @@ public class CommunicationsMonitor {
 				map.put(triplets_sorted[i].second, new ArrayList<ComputerNode>());
 				// create new node to represent the second one in this triplet
 				second = new ComputerNode(triplets_sorted[i].second, triplets_sorted[i].timestamp);
+				allNodes.add(second);
 				// Obtain the list from the map
 				second_list = map.get(triplets_sorted[i].second);
 				// add second node to the map
@@ -123,6 +131,7 @@ public class CommunicationsMonitor {
 						// timestamp than the new one) - create a new one and
 						// append to the list
 					second = new ComputerNode(triplets_sorted[i].second, triplets_sorted[i].timestamp);
+					allNodes.add(second);
 					second_list.add(second);
 				}
 			}
@@ -180,7 +189,7 @@ public class CommunicationsMonitor {
 	 * @return List of the path in the graph (infection path) if one exists,
 	 *         null otherwise.
 	 */
-	public List<ComputerNode> queryInfection(int c1, int c2, int x, int y) {
+	public List<ComputerNode> queryInfection2(int c1, int c2, int x, int y) {
 		//c1 = node infected at time x
 		//c2 = node to be checked at time y
 		if (map.containsKey(c1)) {
@@ -213,7 +222,107 @@ public class CommunicationsMonitor {
 		}
 		return contains;
 	}
+	
 
+	/**
+	 * Determines whether computer c2 could be infected by time y if computer c1
+	 * was infected at time x. If so, the method returns an ordered list of
+	 * ComputerNode objects that represents the transmission sequence. This
+	 * sequence is a path in graph G. The first ComputerNode object on the path
+	 * will correspond to c1. Similarly, the last ComputerNode object on the
+	 * path will correspond to c2. If c2 cannot be infected, return null.
+	 * <p>
+	 * Example 3. In Example 1, an infection path would be (C1, 4), (C2, 4),
+	 * (C2, 8), (C4, 8), (C3, 8)
+	 * <p>
+	 * This method can assume that it will be called only after createGraph()
+	 * and that x <= y. This method must run in O(m) time. This method can also
+	 * be called multiple times with different inputs once the graph is
+	 * constructed (i.e., once createGraph() has been invoked).
+	 *
+	 * @param c1
+	 *            ComputerNode object to represent the Computer that is
+	 *            hypothetically infected at time x.
+	 * @param c2
+	 *            ComputerNode object to represent the Computer to be tested for
+	 *            possible infection if c1 was infected.
+	 * @param x
+	 *            Time c1 was hypothetically infected.
+	 * @param y
+	 *            Time c2 is being tested for being infected.
+	 * @return List of the path in the graph (infection path) if one exists,
+	 *         null otherwise.
+	 */
+	public List<ComputerNode> queryInfection(int c1, int c2, int x, int y) {
+		int size = allNodes.size();
+		Iterator<ComputerNode> iter = allNodes.iterator();
+
+		if (!map.containsKey(c2)){
+			return null;
+		}
+
+		if (!map.containsKey(c1)){
+			return null;
+		}
+		for (int i = 0; i<size; i++){
+			ComputerNode temp = iter.next();
+			temp.setColor(0);
+			temp.setPred(null);
+			
+		}
+		
+		ComputerNode start = null;
+		ComputerNode end = null;
+		List<ComputerNode> startList = map.get(c1);
+		size = startList.size();
+		for (int i = 0; i<size; i++){
+			if (startList.get(i).getTimestamp()>=x){
+				start = startList.get(i);
+				break;
+			}
+		}
+		if (start==null){
+			return null;
+		}
+		return BFS(start, c2, y);
+		
+	}
+	
+	private List<ComputerNode> BFS(ComputerNode start, int end, int y){
+		LinkedList<ComputerNode> q = new LinkedList<ComputerNode>();
+		
+		start.setColor(1);
+		q.add(start);
+		
+		while (!q.isEmpty()){
+			ComputerNode u = q.peek();
+			Iterator<ComputerNode> iter = u.getOutNeighbors().iterator();
+			int size = u.getOutNeighbors().size();
+			for (int i=0; i<size; i++){
+				ComputerNode v = iter.next();
+				if (v.getColor()==0){
+					v.setColor(1);
+					v.setPred(u);
+					if (v.getID()==end && v.getTimestamp()<=y){
+						LinkedList<ComputerNode> returnList = new LinkedList<ComputerNode>();
+						while (v.getPred()!=null){
+							returnList.addFirst(v);
+							v=v.getPred();
+						}
+						returnList.addFirst(v);
+						return returnList;
+					}
+					q.addLast(v);
+				}
+			}
+			q.remove();
+			u.setColor(2);
+		}
+		
+		return null;
+	}
+	
+	
 	/**
 	 * Returns a HashMap that represents the mapping between an Integer and a
 	 * list of ComputerNode objects. The Integer represents the ID of some

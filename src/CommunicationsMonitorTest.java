@@ -18,17 +18,17 @@ public class CommunicationsMonitorTest {
 
     @Test
     public void addCommunication() {
-//        // Initial size should be zero
-//        assertEquals(0, monitor.triplets.size());
-//
-//        // Insert a tuple
-//        monitor.addCommunication(1, 2, 3);
-//        assertEquals(1,monitor.triplets.size());
-//
-//        // Shouldn't work after createGraph() is called
-//        monitor.createGraph();
-//        monitor.addCommunication(5, 6, 7);
-//        assertEquals(1, monitor.triplets.size());//monitor.getCommunicationList().size());
+        // Initial size should be zero
+        assertEquals(0, monitor.triplets.size());
+
+        // Insert a tuple
+        monitor.addCommunication(1, 2, 3);
+        assertEquals(1,monitor.triplets.size());
+
+        // Shouldn't work after createGraph() is called
+        monitor.createGraph();
+        monitor.addCommunication(5, 6, 7);
+        assertEquals(1, monitor.triplets.size());//monitor.getCommunicationList().size());
     }
 
     @Test
@@ -199,6 +199,20 @@ public class CommunicationsMonitorTest {
         assertEquals(null, monitor.getComputerMapping(3));
     }
 
+    
+    @Test
+    public void giantInfection(){
+    	monitor = new CommunicationsMonitor();
+    	
+    	int i = 1;
+    	while (i<8500){
+    		monitor.addCommunication(i, i+1, i);
+    		i++;
+    	}
+    	System.out.println(1);
+    	monitor.createGraph();
+    	System.out.println(monitor.queryInfection(1, 8500, 0, 9000));
+    }
     //--------------------------------------------------------------------------
     // Helper Methods
     //--------------------------------------------------------------------------
