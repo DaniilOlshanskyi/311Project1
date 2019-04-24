@@ -205,7 +205,7 @@ public class CommunicationsMonitorTest {
     	monitor = new CommunicationsMonitor();
     	
     	int i = 1;
-    	while (i<8500){
+    	while (i<200000){
     		monitor.addCommunication(i, i+1, i);
     		i++;
     	}
